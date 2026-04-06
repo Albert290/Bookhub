@@ -1,0 +1,67 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Book": {
+      "title": "Book",
+      "description": "A book read by the user.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The user who read the book." },
+        "title": { "type": "string" },
+        "author": { "type": "string" },
+        "dateAdded": { "type": "string", "format": "date-time" },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": { "type": "string" },
+              "answer": { "type": "string" }
+            }
+          }
+        },
+        "lessons": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["uid", "title", "author", "dateAdded"]
+    },
+    "DailyLesson": {
+      "title": "Daily Lesson",
+      "description": "The lesson displayed to the user on a specific day.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "bookId": { "type": "string" },
+        "lesson": { "type": "string" },
+        "date": { "type": "string", "format": "date" }
+      },
+      "required": ["uid", "bookId", "lesson", "date"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles."
+    },
+    "/books/{bookId}": {
+      "schema": "Book",
+      "description": "Books read by users."
+    },
+    "/daily_lessons/{lessonId}": {
+      "schema": "DailyLesson",
+      "description": "Daily lessons for users."
+    }
+  }
+}
